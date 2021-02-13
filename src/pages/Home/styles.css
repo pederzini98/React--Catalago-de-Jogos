@@ -1,0 +1,17 @@
+Container{
+    flex: 1;
+}
+
+
+.games-container{
+    justify-content: space-around;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 100px;
+}
+.searchForm{
+    justify-content: center;
+    display: flex;
+    margin-top: 100px;
+}
