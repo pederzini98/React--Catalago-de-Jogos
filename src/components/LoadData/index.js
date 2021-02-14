@@ -70,10 +70,9 @@ function LoadData() {
                 </ListGroup>
                 <Card.Body className='button-card'>
                     <Button
-
+                    type="simpleQuery"
                         className="cardButton"
                         onClick={(e) => {
-                            e.preventDefault()
                             dispatch(updateCompraValue({
                                 value: compraValue.value + data.price
                             }))

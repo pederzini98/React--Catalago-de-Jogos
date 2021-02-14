@@ -24,7 +24,7 @@ function NavBarComponent() {
         <>
             <Navbar className="navbar navbar-fixed-top" >
                 <Nav className="nav-content">
-                    <Nav.Item className="item" onClick={window.scrollTo(0, 0)} >Home</Nav.Item>
+                    <a className='item' href=" https://github.com/pederzini98/React--Catalago-de-Jogos" >Github</a>
                     <Nav.Item className="item" onClick={handleOpen}>Carrinho de Compras</Nav.Item>
 
                 </Nav>
