@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from 'react';
 
-import { Container, Navbar, Nav, Card, ListGroupItem, ListGroup, Button, Form, Table,Toast } from 'react-bootstrap'
+import { Container, Navbar, Nav, Card, ListGroupItem, ListGroup, Button, Form, Table } from 'react-bootstrap'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { MdMonetizationOn, MdStar } from "react-icons/md";
+
+import { useDispatch, useSelector } from 'react-redux'
+
+import { setSelectedFilter, updateCompraValue, updateCarrinhoValue, setMODAL } from '../../redux-actions/redux-actions'
 
 import './styles.css'
 
@@ -34,29 +38,36 @@ function Home() {
 
     const classes = useStyles();
 
+    const modalState = useSelector(state => state.modalState)
+
     const [modalStyle] = React.useState(getModalStyle);
-    const [open, setOpen] = React.useState(false);
 
     const handleOpen = () => {
-        setOpen(true);
+        dispatch(setMODAL(
+            true
+        ))
     };
 
     const handleClose = () => {
-        setOpen(false);
+        dispatch(setMODAL(
+            false
+        ));
     };
 
+    const store = useSelector(state => state)
     const dados = require('../../products.json')
-    const [selected, setSelected] = useState('name')
-    const [valorCompra, setvalorCompra] = useState(0)
+    const carrinho = useSelector(state => state.carrinho)
+    const filter = useSelector(state => state.filter)
+    const frete = useSelector(state => state.frete)
+    const compraValue = useSelector(state => state.compra.value)
     const [valorFrete, setvalorFrete] = useState(0)
 
-
-    const [carrinho, setCarrinho] = useState([{ id: 0, nome: '', valor: 0 }])
+    const dispatch = useDispatch()
 
 
 
     function OrdenarJogos(data) {
-        if (selected === 'name' || selected === 'price') {
+        if (filter === 'name' || filter === 'price') {
             return function (a, b) {
                 if (a[data] > b[data]) {
                     return 1;
@@ -77,28 +88,36 @@ function Home() {
         }
     }
 
-    dados.sort(OrdenarJogos(selected))
+    dados.sort(OrdenarJogos(filter))
 
     function RemoveCarrinhoItem(data, key) {
 
         const itensCopy = Array.from(carrinho)
 
-        itensCopy.splice(key + 1, 1)
-        setCarrinho(itensCopy)
-        setvalorCompra(valorCompra.toFixed(2) - data.valor)
+        itensCopy.splice(key , 1)
+
+
+        dispatch(updateCarrinhoValue(
+            itensCopy
+        ))
+
+        dispatch(updateCompraValue({
+            value: compraValue.value - data.valor
+        }))
+        
         setvalorFrete(valorFrete - 10)
     }
 
-    function renderToast() {
-        <Toast>
-            <Toast.Header>
-                <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
-                <strong className="mr-auto">Bootstrap</strong>
-                <small>11 mins ago</small>
-            </Toast.Header>
-            <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
-        </Toast>
-    }
+    // function renderToast() {
+    //     <Toast>
+    //         <Toast.Header>
+    //             <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
+    //             <strong className="mr-auto">Bootstrap</strong>
+    //             <small>11 mins ago</small>
+    //         </Toast.Header>
+    //         <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
+    //     </Toast>
+    // }
 
     function LoadDataCarrinho() {
 
@@ -144,7 +163,16 @@ function Home() {
         )
     }
     function addNewCartItem(id, nome, valor) {
-        setCarrinho([...carrinho, { id: id, nome: nome, valor: valor }]);
+
+        dispatch(updateCarrinhoValue(
+            [
+                ...carrinho,
+                {
+                    
+                    id,nome,valor
+                }
+            ]
+        ))
 
     }
 
@@ -170,8 +198,10 @@ function Home() {
                             className="cardButton"
                             onClick={(e) => {
                                 e.preventDefault()
-                                renderToast()
-                                setvalorCompra(valorCompra + data.price)
+                                // renderToast()
+                                dispatch(updateCompraValue({
+                                    value: compraValue.value + data.price
+                                }))
                                 setvalorFrete(valorFrete + 10)
                                 addNewCartItem(data.id, data.name, data.price.toFixed(2))
                             }}
@@ -184,18 +214,19 @@ function Home() {
 
     useEffect(() => {
 
-        if (valorCompra > 250) {
+        console.log(store)
+        if (compraValue.value > 250) {
             setvalorFrete(0)
         }
-        else if (valorCompra <= 250 && carrinho.length > 1) {
-            setvalorFrete((carrinho.length - 1) * 10)
+        else if (compraValue.value <= 250 && carrinho.length >= 1) {
+            setvalorFrete((carrinho.length) * 10)
         }
         else {
             setvalorFrete(0)
 
         }
 
-    }, [valorFrete, valorCompra, carrinho])
+    }, [valorFrete, compraValue, carrinho, filter])
 
 
     return (
@@ -223,7 +254,12 @@ function Home() {
                         <Form.Control
                             as="select" size="lg"
                             style={{ marginLeft: 5 }}
-                            onChange={e => setSelected(e.target.value)}
+                            onChange={(e) => {
+                                dispatch(setSelectedFilter(
+                                    e.target.value
+                                ))
+
+                            }}
                         >
                             <option value="name">Ordem alfabética</option>
                             <option value="score">Popularidade</option>
@@ -243,7 +279,7 @@ function Home() {
 
             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'black', width: '100%' }}>
                 <Modal
-                    open={open}
+                    open={modalState}
                     onClose={handleClose}
                     aria-labelledby="simple-modal-title"
                     aria-describedby="simple-modal-description"
@@ -251,7 +287,7 @@ function Home() {
                     <div style={modalStyle} className={classes.paper}>
                         <h2 id="simple-modal-title">Carrinho de compras</h2>
                         <LoadDataCarrinho />
-                        <ListGroup.Item style={{ fontWeight: 'bold' }}>Valor da Compra: <b style={{ position: 'absolute', right: 55 }}>{valorCompra.toFixed(2)}</b></ListGroup.Item>
+                        <ListGroup.Item style={{ fontWeight: 'bold' }}>Valor da Compra: <b style={{ position: 'absolute', right: 55 }}>{compraValue.value.toFixed(2)}</b></ListGroup.Item>
                         <ListGroup.Item style={{ fontWeight: 'bold' }}>Valor do Frete: <b style={{ position: 'absolute', right: 55 }}>{valorFrete}</b></ListGroup.Item>
                     </div>
                 </Modal>
