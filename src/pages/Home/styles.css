@@ -1,5 +1,6 @@
-Container{
+.content-container{
     flex: 1;
+    background-color:white;
 }
 
 
@@ -14,4 +15,20 @@ Container{
     justify-content: center;
     display: flex;
     margin-top: 100px;
+}
+.navbar {
+    background-color: rgb(20, 19, 19);
+    height: 80px;
+}
+
+.item{
+    color: whitesmoke;
+    cursor: pointer;
+}
+.nav-content{
+    font-size: xx-large;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
 }
