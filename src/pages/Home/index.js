@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from 'react';
 
-import { Container, Navbar, Nav, Card, ListGroupItem, ListGroup, Button, Form, Table } from 'react-bootstrap'
+import { Container, Navbar, Nav, Card, ListGroupItem, ListGroup, Button, Form, Table,Toast } from 'react-bootstrap'
 
 import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import { MdMonetizationOn, MdStar } from "react-icons/md";
 
-
 import './styles.css'
 
 function Home() {
-    function rand() {
-        return Math.round(Math.random() * 20) - 10;
-    }
-
 
     function getModalStyle() {
-        const top = 50 + rand();
-        const left = 50 + rand();
+        const top = 50
+        const left = 50
 
         return {
             top: `${top}%`,
@@ -27,12 +22,13 @@ function Home() {
     }
     const useStyles = makeStyles((theme) => ({
         paper: {
-            position: 'absolute',
+            position: 'fixed',
             width: 600,
             backgroundColor: theme.palette.background.paper,
             border: '2px solid #000',
             boxShadow: theme.shadows[5],
             padding: theme.spacing(2, 4, 3),
+
         },
     }));
 
@@ -93,6 +89,17 @@ function Home() {
         setvalorFrete(valorFrete - 10)
     }
 
+    function renderToast() {
+        <Toast>
+            <Toast.Header>
+                <img src="holder.js/20x20?text=%20" className="rounded mr-2" alt="" />
+                <strong className="mr-auto">Bootstrap</strong>
+                <small>11 mins ago</small>
+            </Toast.Header>
+            <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
+        </Toast>
+    }
+
     function LoadDataCarrinho() {
 
         return (
@@ -116,7 +123,7 @@ function Home() {
                             <tr key={key}>
                                 <td>{data.nome}</td>
                                 <td>{data.valor}</td>
-                                <td>
+                                <td style={{ textAlign: 'center', justifyContent: 'center' }}>
 
                                     <Button
                                         variant='danger'
@@ -152,19 +159,23 @@ function Home() {
                     </Card.Body>
                     <ListGroup style={{ marginTop: 10 }} className="list-group-flush">
                         <ListGroupItem style={{ display: 'flex', justifyContent: 'space-between', fontSize: 20 }} >
-                            <MdMonetizationOn style={{ color: 'green'}} size='30' />
+                            <MdMonetizationOn style={{ color: 'green' }} size='30' />
                             {data.price}</ListGroupItem>
                         <ListGroupItem style={{ display: 'flex', justifyContent: 'space-between', fontSize: 20 }} >
                             <MdStar style={{ color: 'blueviolet' }} size='30' /> {data.score}</ListGroupItem>
                     </ListGroup>
                     <Card.Body style={{ justifyContent: 'center', display: 'flex', alignItems: 'center', marginTop: 20, marginBottom: 20 }}>
                         <Button
-                            onClick={() => {
+
+                            className="cardButton"
+                            onClick={(e) => {
+                                e.preventDefault()
+                                renderToast()
                                 setvalorCompra(valorCompra + data.price)
                                 setvalorFrete(valorFrete + 10)
                                 addNewCartItem(data.id, data.name, data.price.toFixed(2))
                             }}
-                            style={{ backgroundColor: '#0F772E' }} href="#">Adicionar ao Carrinho</Button>
+                        >Adicionar ao Carrinho</Button>
                     </Card.Body>
                 </Card >
             ))
@@ -224,6 +235,7 @@ function Home() {
                 </Form>
 
             </div>
+            {/* < Formulario data={selected, setSelected} /> */}
             <div className='games-container'>
                 <LoadData />
             </div>
@@ -239,8 +251,8 @@ function Home() {
                     <div style={modalStyle} className={classes.paper}>
                         <h2 id="simple-modal-title">Carrinho de compras</h2>
                         <LoadDataCarrinho />
-                        <ListGroup.Item>Valor da Compra: {valorCompra}</ListGroup.Item>
-                        <ListGroup.Item>Valor do Frete: {valorFrete}</ListGroup.Item>
+                        <ListGroup.Item style={{ fontWeight: 'bold' }}>Valor da Compra: <b style={{ position: 'absolute', right: 55 }}>{valorCompra.toFixed(2)}</b></ListGroup.Item>
+                        <ListGroup.Item style={{ fontWeight: 'bold' }}>Valor do Frete: <b style={{ position: 'absolute', right: 55 }}>{valorFrete}</b></ListGroup.Item>
                     </div>
                 </Modal>
             </div>
