@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 
 import { Container, ListGroup } from 'react-bootstrap'
 
-import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 
 import { useDispatch, useSelector } from 'react-redux'
@@ -35,19 +34,8 @@ function Home() {
             transform: `translate(-${top}%, -${left}%)`,
         };
     }
-    const useStyles = makeStyles((theme) => ({
-        paper: {
-            position: 'fixed',
-            width: 600,
-            backgroundColor: theme.palette.background.paper,
-            border: '2px solid #000',
-            boxShadow: theme.shadows[5],
-            padding: theme.spacing(2, 4, 3),
+   
 
-        },
-    }));
-
-    const classes = useStyles();
     const modalState = useSelector(state => state.modalState)
     const [modalStyle] = React.useState(getModalStyle);
 
@@ -91,7 +79,7 @@ function Home() {
                     open={modalState}
                     onClose={handleClose}
                 >
-                    <div style={modalStyle} className={classes.paper}>
+                    <div style={modalStyle} className='paper'>
                         <h2 >Carrinho de Compras</h2>
                         <CartComponent />
                         <ListGroup.Item style={{ fontWeight: 'bold' }}>Valor da Compra: <b style={{ position: 'absolute', right: 55 }}>{compraValue.value.toFixed(2)}</b></ListGroup.Item>
