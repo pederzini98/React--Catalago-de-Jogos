@@ -8,6 +8,16 @@
     cursor: pointer;
 
 }
+.icon{
+    color: whitesmoke;
+    cursor: pointer;
+    margin-top: 15px;
+    
+}
+.icon:hover{
+    color: yellow;
+
+}
 .item:hover{
     color: yellow;
 
