@@ -1,0 +1,16 @@
+.searchForm{
+    justify-content: center;
+    display: flex;
+    margin-top: 100px;
+}
+
+.form-content{
+    display: flex;
+    align-items: center;
+    justify-content: center ;
+}
+.form-label{
+    flex-wrap: nowrap;
+    width: 200px;
+    font-size: 21px ;
+}

@@ -1,0 +1,38 @@
+
+.card-container{
+    width: 20rem;
+    margin-top: 50px;
+    border: 2px solid  #0F772E
+}
+
+.card-image{
+    width: 100%;
+    margin-top: 3px
+}
+.cardButton{
+    background-color: white;
+    border: 1px solid green;
+    color: green;
+}
+.cardButton:hover{
+    background-color: green;
+}
+.card-body{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.list-item{
+    display: flex;
+    justify-content: space-between;
+    font-size: 20px ;
+} 
+.button-card{
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+    margin-bottom: 20px ;
+}

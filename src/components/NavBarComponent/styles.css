@@ -1,0 +1,21 @@
+.navbar {
+    background-color: rgb(20, 19, 19);
+    height: 80px;
+}
+
+.item{
+    color: whitesmoke;
+    cursor: pointer;
+
+}
+.item:hover{
+    color: yellow;
+
+}
+.nav-content{
+    font-size: xx-large;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+}

@@ -4,7 +4,12 @@
     flex: 1;
     background-color:white;
 }
-
+.welcome{
+    color: 'black'; 
+    margin-top: 90px; 
+    text-align: center; 
+    padding-top: 25px 
+}
 
 .games-container{
     justify-content: space-around;
@@ -13,37 +18,10 @@
     flex-wrap: wrap;
     margin-top: 100px;
 }
-.searchForm{
-    justify-content: center;
-    display: flex;
-    margin-top: 100px;
-}
-.navbar {
-    background-color: rgb(20, 19, 19);
-    height: 80px;
-}
-
-.item{
-    color: whitesmoke;
-    cursor: pointer;
-
-}
-.item:hover{
-    color: yellow;
-
-}
-.nav-content{
-    font-size: xx-large;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-around;
-}
-.cardButton{
-    background-color: white;
-    border: 1px solid green;
-    color: green;
-}
-.cardButton:hover{
-    background-color: green;
+.modal-div{
+    display: 'flex';
+    align-items: 'center';
+    justify-content: 'center';
+    background-color: 'black';
+    width:  100%;
 }
