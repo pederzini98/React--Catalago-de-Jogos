@@ -1,6 +1,7 @@
 # Catalágo de Jogos
 
 Foi me dado o desafio de construir a interface de um catalágo de jogos, baseado em um arquivo JSON contendo às informações dos jogos além de suas imagens.
+* [Link para teste](https://react-catalago-de-jogos-pi2h0llrh.vercel.app/) - Vercel
 
 ## Recursos utilizados
 
